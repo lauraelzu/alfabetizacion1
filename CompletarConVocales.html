@@ -524,6 +524,15 @@
     background-clip: text;
   }
 
+  .feedback-message.incomplete {
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    color: #FF0000;
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    animation: wiggle 0.5s;
+  }
+
   /* Buttons */
   .button-container {
     display: flex;
@@ -852,11 +861,11 @@ const gameData = [
   { word: 'CASA', emoji: '🏠' },
   { word: 'LUNA', emoji: '🌙' },
   { word: 'PATO', emoji: '🦆' },
-  { word: 'PERRO', emoji: '🐕' },
-  { word: 'FLOR', emoji: '🌸' },
+  { word: 'PERA', emoji: '🍐' },
+  { word: 'CAMA', emoji: '🛏️' },
   { word: 'MANO', emoji: '✋' },
-  { word: 'SILLA', emoji: '🪑' },
-  { word: 'MESA', emoji: '🪑' },
+  { word: 'TIJERA', emoji: '✂️' },
+  { word: 'MONO', emoji: '🐵' },
   { word: 'NUBE', emoji: '☁️' }
 ];
 
@@ -1101,8 +1110,12 @@ function checkAnswer() {
   // Check if all vowels are filled
   const vowelCount = wordStructure.filter(ld => ld.isVowel).length;
   if (Object.keys(userAnswers).length !== vowelCount) {
+    feedbackMessageEl.textContent = '❗';
+    feedbackMessageEl.classList.remove('correct', 'incorrect');
+    feedbackMessageEl.classList.add('show', 'incomplete');
     return;
   }
+  feedbackMessageEl.classList.remove('show', 'incomplete');
 
   hasAnswered = true;
   btnCheck.disabled = true;
