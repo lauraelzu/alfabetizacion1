@@ -290,6 +290,7 @@
   .btn-check{background:linear-gradient(135deg,#6BCB77,#4CAF50);color:white}
   .btn-next {background:linear-gradient(135deg,#ec4899,#db2777);color:white}
   .btn-reset{background:linear-gradient(135deg,#FFE66D,#FFC837);color:#9d174d}
+  .btn-retry{background:linear-gradient(135deg,#FF9F1C,#FF7C00);color:white}
 
   /* ── Confetti ── */
   .confetti-container{position:fixed;inset:0;pointer-events:none;z-index:1000}
@@ -388,6 +389,7 @@
         <div class="feedback-message" id="feedbackMessage"></div>
         <div class="btn-row">
           <button class="btn btn-check" id="btnCheck">✓</button>
+          <button class="btn btn-retry" id="btnRetry" style="display:none">↩️</button>
           <button class="btn btn-next"  id="btnNext" disabled>➜</button>
           <button class="btn btn-reset" id="btnReset">🔄</button>
           <a class="btn btn-home" href="index.html" title="Volver al inicio">🏠</a>
@@ -474,12 +476,11 @@ const gameData = [
     items: [
       { word: 'LUNA',      emoji: '🌙', correct: true  },
       { word: 'LUZ',       emoji: '💡', correct: true  },
-      { word: 'LUCIÉRNAGA',emoji: '✨', correct: true  },
+      { word: 'LUGAR',     emoji: '🏞️', correct: true  },
       { word: 'LUPA',      emoji: '🔍', correct: true  },
       { word: 'DELFÍN',    emoji: '🐬', correct: false },
-      { word: 'SILLA',     emoji: '🌙', correct: false },
       { word: 'COHETE',    emoji: '🚀', correct: false },
-      { word: 'FRESA',     emoji: '🍓', correct: false },
+      { word: 'FRUTA',     emoji: '🍓', correct: false },
     ]
   },
   {
@@ -556,6 +557,7 @@ const feedbackMsgEl   = document.getElementById('feedbackMessage');
 const btnCheck        = document.getElementById('btnCheck');
 const btnNext         = document.getElementById('btnNext');
 const btnReset        = document.getElementById('btnReset');
+const btnRetry        = document.getElementById('btnRetry');
 const correctScoreEl  = document.getElementById('correctScore');
 const currentRoundEl  = document.getElementById('currentRound');
 const totalRoundsEl   = document.getElementById('totalRounds');
@@ -586,6 +588,7 @@ function loadRound(){
   selectedSet.clear();
   btnCheck.disabled = false;
   btnNext.disabled  = true;
+  btnRetry.style.display = 'none';
   feedbackMsgEl.className = 'feedback-message';
   feedbackMsgEl.textContent = '';
   selectedCountEl.textContent = '0';
@@ -703,6 +706,7 @@ btnCheck.addEventListener('click', () => {
     else
       feedbackMsgEl.textContent = '¡Faltaron algunas imágenes! 🔍';
     playSound(false);
+    btnRetry.style.display = '';
   }
 });
 
@@ -711,6 +715,8 @@ btnCheck.addEventListener('click', () => {
 // ═══════════════════════════════════════════════════════
 
 btnNext.addEventListener('click', () => { currentRound++; loadRound(); });
+
+btnRetry.addEventListener('click', () => { loadRound(); });
 
 btnReset.addEventListener('click', () => {
   currentRound   = 0;
@@ -795,3 +801,4 @@ window.addEventListener('DOMContentLoaded', initGame);
 </script>
 </body>
 </html>
+
